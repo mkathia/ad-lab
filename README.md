@@ -94,9 +94,51 @@ We now want to set up our DHCP. To do so, we go back to "Add roles and features"
 ![image](https://github.com/mkathia/ad-lab/assets/113075504/499cc71b-0662-40e9-b455-922ed26e4ddb)
 
 Here we select DHCP Server, and Add features. We then proceed to install.
-![image](https://github.com/mkathia/ad-lab/assets/113075504/dc9c8482-b2da-4333-8730-edde62ddf1cc)=
+![image](https://github.com/mkathia/ad-lab/assets/113075504/dc9c8482-b2da-4333-8730-edde62ddf1cc)
 
-After instillation is completed, 
+After instillation is completed, we work towards setting up our scope. We go to the DHCP control panel, click IPv4, and select "New Scope".
+![image](https://github.com/mkathia/ad-lab/assets/113075504/21e95e9a-222c-4ece-8539-0057a8d5bf19)
+
+We name the scope.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/17d329ec-0371-4491-aa8a-c0b995f3e5f1)
+
+Then, we set the start and end IP addresses and set a mask of 24.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/46f6e642-2407-4e67-a8d5-605a9131b213)
+
+We continue past the next pages, Exclusions and Length Duration. We leave both as default.
+
+![image](https://github.com/mkathia/ad-lab/assets/113075504/ca7fbd13-fec7-4489-9562-55bc800749e1)
+![image](https://github.com/mkathia/ad-lab/assets/113075504/176d574a-766a-4a1c-ba7c-3458829c8122)
+
+Then, we configure our DHCP options.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/1518b20d-c4b0-4488-ac67-305a59eff197)
+![image](https://github.com/mkathia/ad-lab/assets/113075504/d23cbdaf-3ae9-46f3-ba07-6d532e0e320d)
+
+We add the address of the domain controller as the default gateway.
+
+The following are left as default.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/1a496f07-3aa8-4494-a8b5-88bd3aa36c01)
+![image](https://github.com/mkathia/ad-lab/assets/113075504/bd765a18-7b0c-46d1-941d-721ee9775327)
+![image](https://github.com/mkathia/ad-lab/assets/113075504/cac9dc23-5aad-451e-8096-375d8f06700a)
+
+We then authorize our DHCP server.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/29af9298-f5f4-437c-92fa-1f3bd0436942)
+
+As we can see, they turned green and we can see our newly created scope under IPv4.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/338f9eb0-5ba9-41e7-975f-53fc32588cdc)
+
+
+Next, we're going to make a configuration that allows us to browse the internet from the domain controller. This isn't usually done, but we're doing it in the lab for convenience. We click "Configure this local server"
+![image](https://github.com/mkathia/ad-lab/assets/113075504/f69f6f19-3bb2-4f21-9906-3900fec88614)
+
+We're going to disable "IE Enhanced Security Configuration."
+![image](https://github.com/mkathia/ad-lab/assets/113075504/813122cf-c59a-4d6e-9219-ad50ac15a91e)
+![image](https://github.com/mkathia/ad-lab/assets/113075504/94ce1a8c-916c-4f9b-b69d-233c35d8dd1e)
+
+Now, we're going to use a PowerShell script to create a large amount of users so we have something to work with. The source code is [here](https://github.com/joshmadakor1/AD_PS).
+
+We get the script and extract it to our desktop.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/57837d03-4753-47db-a3c1-40b919ba07c9)
 
 
 
