@@ -2,7 +2,7 @@
 Images seem small in the page, but can be clicked to expand. 
 
 # Project Overview
-This project is based on Grant Collins's ["Basic Home Lab Running Active Directory"](https://youtu.be/MHsI8hJmggI?si=m6b_8RZaJnNUKuKr). This project will utilize VirtualBox to create a domain controller running Windows Server 2019 which houses our Active Directory. This will be configured with network adapters. It will have NAT and routing configured, as well as possess DHCP for automatic IP addressing. We will also run a PowerShell script to create a thousand users. Another virtual machine will be created that runs Windows 10 Enterprise which will connect to our domain controller. 
+This project is based on Josh Madakor's ["Basic Home Lab Running Active Directory"](https://youtu.be/MHsI8hJmggI?si=m6b_8RZaJnNUKuKr). This project will utilize VirtualBox to create a domain controller running Windows Server 2019 which houses our Active Directory. This will be configured with network adapters. It will have NAT and routing configured, as well as possess DHCP for automatic IP addressing. We will also run a PowerShell script to create a thousand users. Another virtual machine will be created that runs Windows 10 Enterprise which will connect to our domain controller. 
 
 # Setup
 To virtualize a Windows 2019 Server and Windows 10 Enterprise system, we will need their respective .iso files. To begin, we will obtain these. 
@@ -140,5 +140,72 @@ Now, we're going to use a PowerShell script to create a large amount of users so
 We get the script and extract it to our desktop.
 ![image](https://github.com/mkathia/ad-lab/assets/113075504/57837d03-4753-47db-a3c1-40b919ba07c9)
 
+When looking at the text files, we can see that it's a list of randomly generated names. These are going to serve as our users. At the top we add our own name.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/14b2889b-3048-455a-93b0-0da633d90077)
 
+Now that we have the script, we go to PowerShell and run it as an administrator.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/00e32661-c5db-4268-92f7-aaa0cc677104)
 
+We then open our PowerShell script.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/2b178736-8176-438d-85c9-d1c959210753)
+![image](https://github.com/mkathia/ad-lab/assets/113075504/21706d5f-887d-44e3-9a84-d7e2de0d92ee)
+
+If we try and run this script right now, we face an error message. This is because of security policies set inside Windows.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/dd61c345-4dd1-4910-b8d8-d96032c99c5a)
+
+To prevent this, we disable this policy. In a live environment, this isn't recommended, but since we're in our own lab there is little risk. The command we run is _Set-ExecutionPolicy Unrestricted_. We click "Yes to all".
+![image](https://github.com/mkathia/ad-lab/assets/113075504/2cfbc7db-beaa-4aeb-a34a-f3702a9d54d0)
+
+After changing directories, we run the script.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/17b7d83f-b255-41cc-b362-caf13877ad1c)
+
+As we can see, the script is run and created the users. Going into the Active Directory window, we can see this as well.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/25fec68d-5f6c-47cf-b308-b13e1216e31d)
+
+When running a Find operation, we can see that there are 1052 users.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/0b7fedce-e58f-4e72-a66f-f5d4d20504b7)
+
+Now that this is completed, we will create our Windows 10 Client to connect to this server. Using VirtualBox, we go through the standard steps to create our Windows 10 Enterprise machine. Giving 4GB of RAM and 4 cores, we also set the Network Adapter to internal.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/281177d1-a49e-4d44-aab9-5279b77d0c95)
+
+We go through the setup steps, and wait for it to finish...
+![image](https://github.com/mkathia/ad-lab/assets/113075504/2b1daa9a-f26c-4c81-b235-f462e254295b)
+
+After going through standard setup steps, we once again wait.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/d22cae68-39f3-4e8d-ade7-b95418f27088)
+
+Then finally we have our functional client.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/81186ab8-9928-46c4-8416-2767a68d5623)
+
+We can check our ipconfig and ping a domain to see that our networking is successful.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/6d71bdf8-ec39-48f6-b499-69adbfd17146)
+
+For further confirmation, we can ping our domain, and we see that it resolves.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/ae321714-6398-47bc-b81d-a5ad9b949731)
+
+We're going to change our hostname. We rightclick the start menu and go to System, then scroll down and click "Rename this PC (advanced)"
+![image](https://github.com/mkathia/ad-lab/assets/113075504/99541040-a558-4e1f-aac0-884ce7997b2d)
+![image](https://github.com/mkathia/ad-lab/assets/113075504/94179b85-c1af-4bcb-81c9-222462a5bcfe)
+
+Then, we click "Change" to rename the computer.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/eb9723c0-38f6-4522-8371-d2b0cbd870a4)
+
+We name the machine CLIENT1, and try to join the domain.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/e7cc744b-d0a6-4177-9957-ea03df8da26b)
+
+We are prompted with a login page, where we can use any of the previously created users and passwords. We provide our own.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/cafbcc49-fc54-4dab-8f8c-5b380cc41116)
+
+We see a successful login.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/438531e5-c653-44a4-8148-ab3269ea5b4a)
+
+We then restart our computer. While the computer is restarting, we can go to the DHCP manager in the server, and check "Address Leases". We see the IP leased to the client we created.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/5f6741e9-ac38-47af-bf9f-15df53cce76f)
+
+Furthermore, if we go into the Users and Computers manager, we can see a "Computers" folder with CLIENT1 within it.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/2a12436e-dfaa-43fe-a5dc-63d920864d79)
+
+Once the computer is finished restarting, we can go into the login page and click "Other user". Here, we see that we are logging into the created domain. Thus, we can use any of the previously created users. After we log in, it begins to create us a profile. After it finishes, we are in the computer. We can open cmd and run "whoami" to see that we are a part of the domain, logged in as our own user.
+![image](https://github.com/mkathia/ad-lab/assets/113075504/facf3018-250b-4fbc-b8e5-4a9bd47f87f8)
+
+This concludes this project.
